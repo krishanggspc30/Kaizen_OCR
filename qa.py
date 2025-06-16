@@ -191,7 +191,7 @@ def main():
             <div class="logo-placeholder">AI</div>
         </div>
         <div class="title-section">
-            <h1>Document AI Assistant</h1>
+            <h1>Kaizen</h1>
             <p class="subtitle">Extract text from documents and get intelligent answers</p>
         </div>
     </div>
