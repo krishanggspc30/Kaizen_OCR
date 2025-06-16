@@ -9,9 +9,9 @@ import pdfplumber
 import json
 from dotenv import load_dotenv
 
-# --- LangChain imports for Q&A ---
-from langchain_community.chat_models import ChatOpenAI
-from langchain.docstore.document import Document
+# --- Updated LangChain imports for Q&A ---
+from langchain_openai import ChatOpenAI
+from langchain.schema import Document
 from langchain.chains.question_answering import load_qa_chain
 from langchain.text_splitter import CharacterTextSplitter
 
@@ -126,7 +126,7 @@ def main():
         if 'api_key' in st.session_state:
             if st.button("Clear stored API key"):
                 del st.session_state.api_key
-                st.experimental_rerun()
+                st.rerun()
 
         st.markdown("---")
         st.markdown("### How to set API Key")
@@ -222,9 +222,9 @@ export TOGETHER_API_KEY=your_key_here
 
         # Initialize LLM and QA chain
         llm = ChatOpenAI(
-            model_name="meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo",
-            openai_api_key=api_key,
-            openai_api_base="https://api.together.xyz/v1",
+            model="meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo",
+            api_key=api_key,
+            base_url="https://api.together.xyz/v1",
             temperature=0.1,
             max_tokens=4000
         )
