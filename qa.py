@@ -188,11 +188,11 @@ def main():
     st.markdown("""
     <div class="main-header">
         <div class="logo-section">
-            <div class="logo-placeholder">AI</div>
+            <div class="logo-placeholder"><img src="https://dcassetcdn.com/design_img/3623123/74975/74975_19895096_3623123_f8f1ee0b_image.jpg"></div>
         </div>
         <div class="title-section">
             <h1>Kaizen</h1>
-            <p class="subtitle">Extract text from documents and get intelligent answers</p>
+            <p class="subtitle">Continuous Improvement</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
