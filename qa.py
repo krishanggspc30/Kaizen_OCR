@@ -20,8 +20,8 @@ load_dotenv()
 
 # Streamlit page configuration
 st.set_page_config(
-    page_title="Document AI Assistant",
-    page_icon="🤖",
+    page_title="Kaizen Industries",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -273,7 +273,7 @@ def main():
             st.warning("⚠️ Please configure your API key to process files.")
 
     elif mode == "🌐 From URL":
-        url = st.text_input("Enter document URL", placeholder="https://example.com/document.pdf")
+        url = st.text_input("Enter document URL", placeholder="https://dcassetcdn.com/design_img/3623123/74975/74975_19895096_3623123_f8f1ee0b_image.jpg")
         if st.button("🔄 Fetch Document", type="primary"):
             if not api_key:
                 st.warning("⚠️ Please configure your API key first.")
