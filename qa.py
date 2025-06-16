@@ -104,10 +104,13 @@ def main():
     api_key = ""
     with st.sidebar:
         st.header("🔧 Configuration")
+        
+        # Check for API key in environment variables (GitHub Secrets or .env)
         if "TOGETHER_API_KEY" in os.environ:
             api_key = os.getenv("TOGETHER_API_KEY")
-            st.markdown("**API Key loaded from environment variable.**")
+            st.markdown("**✅ API Key loaded from environment variable.**")
         else:
+            # Manual input fallback for local development
             manual_key = st.text_input(
                 "Enter Together AI API Key",
                 type="password",
@@ -132,11 +135,16 @@ def main():
         st.markdown("### How to set API Key")
         st.markdown(
             """
+**For GitHub/Streamlit Cloud deployment:**
+1. Add `TOGETHER_API_KEY` to your GitHub repository secrets
+2. Deploy via Streamlit Cloud - the secret will be automatically available
+
+**For local development:**
 1. Create a `.env` file:
 ```
 TOGETHER_API_KEY=your_key_here
 ```
-2. Or set env var:
+2. Or set environment variable:
 ```bash
 export TOGETHER_API_KEY=your_key_here
 ```
