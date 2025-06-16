@@ -10,7 +10,7 @@ import json
 from dotenv import load_dotenv
 
 # --- LangChain imports for Q&A ---
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.docstore.document import Document
 from langchain.chains.question_answering import load_qa_chain
 from langchain.text_splitter import CharacterTextSplitter
