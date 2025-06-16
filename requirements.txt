@@ -2,5 +2,7 @@ streamlit
 requests
 python-dotenv
 Pillow
-langchain
+pdfplumber
+langchain>=0.1.13
 openai
+tiktoken
