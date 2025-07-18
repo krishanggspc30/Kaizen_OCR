@@ -1,0 +1,40 @@
+**INFANT TRAVELS_2X1_PUSHBACK_SWANKY_900MM_WORK ORDER 1556**
+
+**13 OCUPANCY**
+**DATE - 20.04.2025**
+**SET QTY- 20**
+
+**CONFIGURATION**
+
+| SR. NO. | COMP NAME | A/R | SEAT BELT | SIDE | QTY | leg ht | MTG DIM (FABRICATION) | MTG DIM (FINAL) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2 'SEATER 900MM (KPI-01G) | YES-1 GANGWAY SIDE | YES - 2 3 POINT | RH | 2 | 257 | CENTER 760 | CENTER 760 |
+| 1A | 2 'SEATER 900MM_HUMP (KPI-03G) | YES-1 GANGWAY SIDE | YES - 2 3 POINT | RH | 1 | ht 326 c chana 239 mm&patii 320*40*4 mm & tube25*12*40 | 47-807 | CENTER 760 |
+| 2 | 1 'SEATER 475MM (KPI-02G) | YES-1 GANGWAY SIDE | YES - 1 3 POINT | LH | 2 | 257 | 123-170 | 140-170 |
+| 2A | 1 'SEATER 475MM (KPI-05G) | YES-1 GANGWAY SIDE | YES - 1 3 POINT | LH | 1 | ht 326 c chana 239 mm&patii 320*40*4 mm & tube25*12*40 | 25-370 | 345 |
+| 3 | 2 SEATER 800 MM BOBBY HHR (KPI-07G) | YES-1 GANGWAY SIDE | YES - 2 3 POINT | RH | 1 | ht-326 c chana-305 mm | CENTER 600 | CENTER 600 |
+| 3A | 2 SEATER 800 MM BOBBY HHR (KPI-07G) | NO | YES - 2 3 POINT | LH | 1 | ht-326 c chana-305 mm | CENTER 600 | CENTER 600 |
+
+**BACKREST HT TO BE INCREASED BY 40 MM SEATBASE HEIGHT SHOULD BE <480 MM MAX.**
+
+**NOTE-वरील कॉफीगरेशन सोबत कस्टमर ड्रॉइंग पण पहावे**
+
+| DIE NO. - 152 |
+| --- |
+| DIE NO.- 114/ DIE NO. 117 |
+| 400 X 365 X 12 |
+| JIG NO. 18 |
+| BLACK P P POWER |
+| IVORY FABRIC |
+| YES - ACGL BLUE REXINE |
+| YES - ACGL BLUE REXINE |
+| YES WITH ACCESSORIES |
+| YES |
+| PIPE TYPE |
+| YES |
+
+**ALL SEATS ARE FLOOR MOUNTED, Armrest - Dolphin type, Seatbelt - 3 point Lap belt, Backpad with all accessories, Pipe type footrest to be provided to all seats, Valence Cover at gangway side to be provided.**
+
+**Prepared By ARN**
+**Checked By PPC**
+**Authorised By**
