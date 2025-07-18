@@ -165,7 +165,7 @@ def build_database_index():
 
 # --- Streamlit UI ---
 
-st.title("🧠 Intelligent Document Assistant")
+st.title("Kaizen Engineering")
 
 # --- Sidebar for Upload and Indexing ---
 with st.sidebar:
