@@ -1,8 +1,5 @@
 streamlit
 requests
-pillow
-pdfplumber
+PyMuPDF
+Pillow
 python-dotenv
-langchain
-langchain-openai
-langchain-community
