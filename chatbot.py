@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 # --- Constants & Initialization ---
-DATABASE_DIR = "Uploads"
+DATABASE_DIR = "data"
 OCR_CACHE_DIR = "ocr_cache"
 INDEX_FILE = "index.json"
 API_KEY = os.getenv("TOGETHER_API_KEY")
