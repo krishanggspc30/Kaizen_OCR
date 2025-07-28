@@ -16,8 +16,8 @@ from typing import List, Dict, Any, Optional
 
 # --- Page Configuration ---
 st.set_page_config(
-    page_title="Document Assistant",
-    page_icon="🧠",
+    page_title="Kaizen Engineering",
+    page_icon="",
     layout="wide"
 )
 
@@ -719,7 +719,7 @@ def handle_general_question(user_prompt: str) -> str:
 # --- Main Streamlit UI ---
 def main():
     """Main function to run the Streamlit application."""
-    st.title("📄 Document Assistant")
+    st.title("Kaizen Engineering")
 
     if not API_KEY:
         st.error("FATAL: TOGETHER_API_KEY environment variable not set. Application cannot start."); st.stop()
