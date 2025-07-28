@@ -330,7 +330,7 @@ def handle_general_question(user_prompt: str) -> str:
 # --- Main Streamlit UI ---
 def main():
     """Main function to run the Streamlit application."""
-    st.title("📄 Document Assistant")
+    st.title("Kaizen Engineering")
 
     if not API_KEY:
         st.error("FATAL: TOGETHER_API_KEY environment variable not set. Application cannot start."); st.stop()
