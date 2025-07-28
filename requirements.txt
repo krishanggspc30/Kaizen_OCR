@@ -3,3 +3,6 @@ requests
 PyMuPDF
 Pillow
 python-dotenv
+python-docx
+pandas
+openpyxl
