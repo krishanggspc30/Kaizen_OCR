@@ -21,9 +21,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- Removed custom styling to allow Streamlit's default dark/light theme ---
-
-
 # --- Logging Configuration ---
 logging.basicConfig(
     level=logging.INFO,
@@ -165,7 +162,6 @@ def extract_text_from_file(filename: str, file_content: bytes) -> str:
     }
     
     if file_ext in extractors:
-        # Pass filename only to the ocr function
         if file_ext == 'pdf':
             return extractors[file_ext](file_content, filename)
         return extractors[file_ext](file_content)
@@ -203,9 +199,14 @@ def process_file_for_index(filename: str) -> Optional[Dict[str, Any]]:
     except Exception as e:
         logger.error(f"Unexpected error processing {filename}: {e}"); return None
 
+# FIX: Renamed the cached function to separate logic from UI
 @st.cache_resource
-def automatic_database_build():
-    """Automatically builds or updates the database index at startup."""
+def _automatic_database_build_cached() -> int:
+    """
+    Performs the heavy lifting of indexing files.
+    Returns the number of files processed.
+    This function is cached.
+    """
     for dir_path in [DATABASE_DIR, OCR_CACHE_DIR]:
         if not os.path.exists(dir_path): os.makedirs(dir_path); logger.info(f"Created directory: {dir_path}")
 
@@ -220,18 +221,29 @@ def automatic_database_build():
     files_to_process = list(db_files - indexed_files)
 
     if not files_to_process:
-        logger.info("Database index is up to date."); return
+        logger.info("Database index is up to date."); return 0
 
-    with st.spinner(f"Found {len(files_to_process)} new document(s). Indexing now..."):
-        with ThreadPoolExecutor(max_workers=5) as executor:
-            future_to_filename = {executor.submit(process_file_for_index, filename): filename for filename in files_to_process}
-            for future in as_completed(future_to_filename):
-                result = future.result()
-                if result: index.update(result)
-        
-        with open(INDEX_FILE, 'w') as f: json.dump(index, f, indent=4)
-    st.toast(f"✅ Successfully added {len(files_to_process)} new document(s) to the database!")
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        future_to_filename = {executor.submit(process_file_for_index, filename): filename for filename in files_to_process}
+        for future in as_completed(future_to_filename):
+            result = future.result()
+            if result: index.update(result)
+    
+    with open(INDEX_FILE, 'w') as f: json.dump(index, f, indent=4)
     logger.info(f"Database update complete. Added {len(files_to_process)} files.")
+    return len(files_to_process)
+
+# FIX: Created a new non-cached function for UI elements
+def run_automatic_database_build():
+    """
+    Runs the database build process and shows UI feedback (spinner, toast).
+    This function is NOT cached.
+    """
+    with st.spinner("Checking for new documents in the database..."):
+        num_processed = _automatic_database_build_cached()
+    
+    if num_processed > 0:
+        st.toast(f"✅ Successfully added {num_processed} new document(s) to the database!")
 
 
 # --- Chatbot Core Functions ---
@@ -335,7 +347,8 @@ def main():
     if not API_KEY:
         st.error("FATAL: TOGETHER_API_KEY environment variable not set. Application cannot start."); st.stop()
 
-    automatic_database_build()
+    # FIX: Call the non-cached UI function
+    run_automatic_database_build()
 
     with st.sidebar:
         st.header("Upload Document")
@@ -343,7 +356,7 @@ def main():
             "Upload a file for temporary analysis", 
             type=SUPPORTED_FILE_TYPES, 
             label_visibility="collapsed",
-            key="file_uploader_widget"  # Added a unique key here
+            key="sidebar_file_uploader"
         )
         
         if uploaded_file:
