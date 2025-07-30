@@ -87,7 +87,7 @@ def call_together_api(prompt: str, image_base64: Optional[str] = None, max_token
 
     payload = {
         "model": "meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo",
-        "max_tokens": max_tokens, "temperature": 0.2,
+        "max_tokens": max_tokens, "temperature": 0.3, # Slightly increased for more natural language
         "messages": [{"role": "user", "content": content}]
     }
 
@@ -199,14 +199,9 @@ def process_file_for_index(filename: str) -> Optional[Dict[str, Any]]:
     except Exception as e:
         logger.error(f"Unexpected error processing {filename}: {e}"); return None
 
-# FIX: Renamed the cached function to separate logic from UI
 @st.cache_resource
 def _automatic_database_build_cached() -> int:
-    """
-    Performs the heavy lifting of indexing files.
-    Returns the number of files processed.
-    This function is cached.
-    """
+    """Performs the heavy lifting of indexing files."""
     for dir_path in [DATABASE_DIR, OCR_CACHE_DIR]:
         if not os.path.exists(dir_path): os.makedirs(dir_path); logger.info(f"Created directory: {dir_path}")
 
@@ -233,12 +228,8 @@ def _automatic_database_build_cached() -> int:
     logger.info(f"Database update complete. Added {len(files_to_process)} files.")
     return len(files_to_process)
 
-# FIX: Created a new non-cached function for UI elements
 def run_automatic_database_build():
-    """
-    Runs the database build process and shows UI feedback (spinner, toast).
-    This function is NOT cached.
-    """
+    """Runs the database build process and shows UI feedback."""
     with st.spinner("Checking for new documents in the database..."):
         num_processed = _automatic_database_build_cached()
     
@@ -284,7 +275,29 @@ def perform_comparison(doc_b_name: str) -> str:
     
     with open(doc_b_text_path, 'r', encoding='utf-8') as f: doc_b_text = f.read()
 
-    prompt = f"Perform a detailed comparison of Document A ({doc_a_name}) and Document B ({doc_b_name}). Create a markdown table contrasting all attributes. Document A Text: {doc_a_text} \n\n Document B Text: {doc_b_text}"
+    # IMPROVED PROMPT
+    prompt = f"""
+    You are an expert document analyst. Your task is to provide a clear, concise, and professional comparison of the two documents provided below.
+    Instead of just extracting text, synthesize the information and highlight the key differences and similarities in a helpful manner.
+
+    **Document A:** `{doc_a_name}`
+    **Document B:** `{doc_b_name}`
+
+    **Instructions:**
+    1.  **High-Level Summary:** Start with a brief paragraph summarizing the most important similarities and differences.
+    2.  **Detailed Comparison:** Create a markdown table to contrast the specific attributes. Be thorough.
+    3.  **Conclusion:** Conclude with any final observations or potential implications of the differences.
+
+    **Document A Content:**
+    ---
+    {doc_a_text}
+    ---
+
+    **Document B Content:**
+    ---
+    {doc_b_text}
+    ---
+    """
     with st.spinner(f"Generating comparison with `{doc_b_name}`..."):
         return call_together_api(prompt) or "Sorry, comparison failed."
 
@@ -292,7 +305,20 @@ def answer_uploaded_file_question(user_prompt: str) -> Optional[str]:
     """Answers a question using only the uploaded file's context."""
     context = st.session_state.uploaded_file_data.get("text", "")
     doc_name = st.session_state.uploaded_file_data.get("name", "the uploaded file")
-    prompt = f"Answer the user's question using ONLY the context from `{doc_name}`. If the answer is not found, respond with the exact string 'ANSWER_NOT_FOUND'.\n\nContext: {context}\n\nQuestion: {user_prompt}"
+    # IMPROVED PROMPT
+    prompt = f"""
+    You are a helpful and knowledgeable assistant. Your goal is to answer the user's question based *only* on the provided text from the document `{doc_name}`.
+    - Read the context carefully.
+    - Formulate a clear and conversational answer in your own words. Do not just copy-paste chunks of text.
+    - If the answer is not found in the text, you MUST respond with the exact string 'ANSWER_NOT_FOUND' and nothing else.
+
+    **Context from `{doc_name}`:**
+    ---
+    {context}
+    ---
+
+    **User's Question:** {user_prompt}
+    """
     return call_together_api(prompt)
 
 def answer_database_question(user_prompt: str) -> str:
@@ -326,7 +352,24 @@ def answer_database_question(user_prompt: str) -> str:
                 with open(text_path, 'r', encoding='utf-8') as f: relevant_docs_text.append(f"--- START: {filename} ---\n{f.read()}\n--- END: {filename} ---")
         
         context_text = "\n\n".join(relevant_docs_text)
-        qa_prompt = f"Answer the user's question using ONLY the context from the relevant documents. Synthesize the answer and cite the source document(s).\n\nContext: {context_text}\n\nQuestion: {user_prompt}"
+        # IMPROVED PROMPT
+        qa_prompt = f"""
+        You are a helpful and knowledgeable research assistant. Your goal is to answer the user's question based *only* on the provided context from a set of documents.
+
+        **Instructions:**
+        1.  Carefully read the user's question and the context from all provided documents.
+        2.  Synthesize the information from the relevant sources to form a comprehensive, conversational answer. Do not just copy-paste text.
+        3.  If information comes from multiple documents, combine it into a single, coherent response.
+        4.  For each piece of information, cite the source document filename(s) in parentheses, like this: (source: document.pdf).
+        5.  If the answer cannot be found in the provided context, state that clearly.
+
+        **Context from Documents:**
+        ---
+        {context_text}
+        ---
+
+        **User's Question:** {user_prompt}
+        """
         return call_together_api(qa_prompt) or "Sorry, I could not find an answer in the relevant documents."
 
 def handle_general_question(user_prompt: str) -> str:
@@ -342,12 +385,11 @@ def handle_general_question(user_prompt: str) -> str:
 # --- Main Streamlit UI ---
 def main():
     """Main function to run the Streamlit application."""
-    st.title("Kaizen Engineering")
+    st.title("Kaizen Engineering Document Assistant")
 
     if not API_KEY:
         st.error("FATAL: TOGETHER_API_KEY environment variable not set. Application cannot start."); st.stop()
 
-    # FIX: Call the non-cached UI function
     run_automatic_database_build()
 
     with st.sidebar:
