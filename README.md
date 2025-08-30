@@ -1,6 +1,7 @@
 # Kaizen Engineering Document Assistant Suite
 
 This repository contains a suite of intelligent applications built with Streamlit and Python for advanced document analysis. These tools leverage the Together AI API to provide capabilities like interactive chat, document comparison, and robust question-answering for various file formats, including PDFs, DOCX, and Excel files.
+
 <img width="1710" height="854" alt="Screenshot 2025-08-30 at 10 29 21 AM" src="https://github.com/user-attachments/assets/ce50b7e1-3115-4d64-9b46-ef2ec64057ab" />
 
 *(Above: A screenshot of the `main.py` application interface)*
@@ -56,15 +57,15 @@ This application offers a more streamlined and visually styled Q\&A experience b
 
 ### 4\. `requirements.txt`
 
-This file is crucial for setting up the project's environment. [cite\_start]It lists all the necessary Python libraries that need to be installed for the applications to run correctly. [cite: 1]
+This file is crucial for setting up the project's environment. It lists all the necessary Python libraries that need to be installed for the applications to run correctly.
 
-  * [cite\_start]**`streamlit`**: The core framework for building the web UI. [cite: 1]
-  * [cite\_start]**`requests`**: For making HTTP requests to the Together AI API. [cite: 1]
-  * [cite\_start]**`PyMuPDF`**: Used to open and process PDF files, primarily for converting pages to images for OCR. [cite: 1]
-  * [cite\_start]**`Pillow`**: A library for opening, manipulating, and saving many different image file formats. [cite: 1]
-  * [cite\_start]**`python-dotenv`**: To load environment variables (like API keys) from a `.env` file. [cite: 1]
-  * [cite\_start]**`python-docx`**: For extracting text from Microsoft Word (.docx) documents. [cite: 1]
-  * [cite\_start]**`pandas`** & **`openpyxl`**: Used for reading and extracting data from Excel files (.xlsx, .xls) and CSVs. [cite: 1]
+  * **`streamlit`**: The core framework for building the web UI.
+  * **`requests`**: For making HTTP requests to the Together AI API.
+  * **`PyMuPDF`**: Used to open and process PDF files, primarily for converting pages to images for OCR.
+  * **`Pillow`**: A library for opening, manipulating, and saving many different image file formats.
+  * **`python-dotenv`**: To load environment variables (like API keys) from a `.env` file.
+  * **`python-docx`**: For extracting text from Microsoft Word (.docx) documents.
+  * **`pandas`** & **`openpyxl`**: Used for reading and extracting data from Excel files (.xlsx, .xls) and CSVs.
 
 -----
 
